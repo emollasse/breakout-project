@@ -1,5 +1,6 @@
 ﻿import pygame
 from pygame.locals import *
+from math import sqrt
 
 class Barre:
     def __init__(self, image):
@@ -30,8 +31,9 @@ class Ball:
         self.rayon = 12.5
         self.x = 400-self.rayon
         self.y = 550-2*self.rayon
-        self.vitessex = 1
-        self.vitessey = -1
+        self.norm_vitesse = 1.6
+        self.vitessex = 0
+        self.vitessey = -self.norm_vitesse
         self.start_position = True
         self.last_iteration = False
 
@@ -63,31 +65,38 @@ class Ball:
             if (self.x + self.rayon > paddle.x and self.x + self.rayon < paddle.x + paddle.sizew) and (self.y + self.rayon < paddle.y or self.y + self.rayon > paddle.y+paddle.sizeh):
                 if self.last_iteration == False:
                     self.vitessey *=-1
+                    self.rebound_paddle(paddle)
                 self.last_iteration = True
                 if self.y + self.rayon < paddle.y :
                     self.y = paddle.y - 2*self.rayon
                 else :
                     self.y = paddle.y + paddle.sizeh
-                print('change y')
             elif (self.y + self.rayon > paddle.y and self.y + self.rayon < paddle.y + paddle.sizeh) and (self.x + self.rayon < paddle.x or self.x + self.rayon > paddle.x+paddle.sizew):
                 if self.last_iteration == False:
                     self.vitessex *=-1
                 self.last_iteration = True
-                print('change x')
                 if self.x + self.rayon < paddle.x :
                     self.x = paddle.x - 2*self.rayon
                 else :
                     self.x = paddle.x + paddle.sizew
             else :
-                print('change x and y')
                 if self.last_iteration == False:
-                    if (self.vitessex > 0 and self.x + self.rayon < paddle.x) or (self.vitessex < 0 and self.x + self.rayon > paddle.x+paddle.sizew):
-                        self.vitessex *=-1
+                    self.rebound_paddle(paddle)
                     if (self.vitessey > 0 and self.y + self.rayon < paddle.y) or (self.vitessey < 0 and self.y + self.rayon > paddle.y+paddle.sizeh):
                         self.vitessey *=-1
                 self.last_iteration = True
 
         else:
             self.last_iteration = False
+
+
+    def rebound_paddle(self, paddle):
+        self.vitessex = ((self.x + self.rayon - paddle.x-paddle.sizew/2)/(paddle.sizew/1.5))*self.norm_vitesse
+        if self.vitessey < 0:
+            self.vitessey = -sqrt(abs(self.norm_vitesse**2 - self.vitessex**2))
+        else :
+            self.vitessey = sqrt(abs(self.norm_vitesse**2 - self.vitessex**2))
+
+
 
 
