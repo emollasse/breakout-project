@@ -7,6 +7,7 @@ class Level:
     def __init__(self, nb):
         self.nb = nb
         self.bricks = []
+        self.color = [(232,232,0),(255,127,0),(255,0,0)]
         self.end = False
         self.end_game = False
 
@@ -16,14 +17,19 @@ class Level:
 
     def load(self):
         self.end = False
+        self.bricks = []
         if len(self.list_levels) > self.nb:
             name_level = self.list_levels[self.nb]
             with open(str(name_level), 'r') as level:
                 for line in level.read().split('\n'):
                     brick = line.split(';')
-                    self.bricks.append(Brick(int(brick[0]),int(brick[1])))
+                    self.bricks.append(Brick(int(brick[0]),int(brick[1]),int(brick[2]),int(brick[3]),int(brick[4])))
         else :
             self.end_game = True
+
+    def draw_bricks(self, window):
+        for brick in self.bricks :
+            pygame.draw.rect(window, self.color[brick.life-1],(brick.x, brick.y, brick.sizew, brick.sizeh))
 
     def manage_bricks(self, ball):
         l = []

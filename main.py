@@ -22,10 +22,10 @@ while not level.end_game:
     while not level.end and not level.end_game:
         for event in pygame.event.get():
             if event.type == QUIT:
-                level.end = True
+                level.end_game = True
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    level.end = True
+                    level.end_game = True
                 elif event.key == K_SPACE:
                     ball.go()
 
@@ -39,7 +39,7 @@ while not level.end_game:
             t = time.time()
             if ball.game_over == True:
                 print('game over')
-                level.end_game = True
+                level.end = True
             if level.victory() == True:
                 print('victory')
                 level.end = True
@@ -49,8 +49,7 @@ while not level.end_game:
         fenetre.fill(0)
         fenetre.blit(barre.image,(barre.x ,barre.y))
         fenetre.blit(ball.image,(ball.x,ball.y))
-        for brick in level.bricks :
-            fenetre.blit(brick.image,(brick.x, brick.y))
+        level.draw_bricks(fenetre)
         pygame.display.flip()
 
 pygame.quit()

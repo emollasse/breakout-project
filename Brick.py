@@ -3,14 +3,13 @@ from pygame.locals import *
 from Barre import *
 
 class Brick:
-    def __init__(self, x, y):
+    def __init__(self, x, y, life, sizew, sizeh):
         self.image = pygame.image.load("Img/Barre.png").convert()
         self.x = x
         self.y = y
-        self.vitesse = 1
-        self.sizew = 150
-        self.sizeh = 19
-        self.life = 1
+        self.sizew = sizew
+        self.sizeh = sizeh
+        self.life = life
         self.last_iteration = False
 
     def __del__(self):
@@ -42,5 +41,6 @@ class Brick:
                         ball.vitessey *=-1
                 self.last_iteration = True
             self.life -=1
+            print(self.life)
         else:
             self.last_iteration = False
