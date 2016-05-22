@@ -1,6 +1,7 @@
 ﻿import pygame
 from pygame.locals import *
 from Brick import *
+from File import *
 from math import sqrt
 
 class Barre:
@@ -32,7 +33,7 @@ class Ball:
         self.rayon = 12.5
         self.x = 400-self.rayon
         self.y = 550-2*self.rayon
-        self.norm_vitesse = 1.6
+        self.norm_vitesse = 1
         self.vitessex = 0
         self.vitessey = -self.norm_vitesse
         self.start_position = True

@@ -2,24 +2,6 @@
 from pygame.locals import *
 from Barre import *
 
-class Bricks:
-    def __init__ (self, bricks):
-        self.bricks = bricks
-
-    def manage_bricks(self, ball):
-        l = []
-        for i in range(len(self.bricks)) :
-            self.bricks[i].collision(ball)
-            if self.bricks[i].life == 0:
-                l += [i]
-        for i in l : del(self.bricks[i])
-
-
-    def victory(self):
-        if self.bricks == []:
-            return True
-        return False
-
 class Brick:
     def __init__(self, x, y):
         self.image = pygame.image.load("Img/Barre.png").convert()
