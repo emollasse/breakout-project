@@ -47,7 +47,7 @@ class Ball:
             self.x += self.vitessex
             self.y += self.vitessey
             self.collision_paddle(paddle)
-            if len(bricks) != 0 : bricks[0].collision(self)
+            bricks.manage_bricks(self)
             if self.x < 0 or self.x > 800-2*self.rayon:
                 if self.x < 0 : self.x = 0
                 elif self.x > 800-2*self.rayon : self.x = 800-2*self.rayon

@@ -12,7 +12,8 @@ continuer = True
 
 barre = Barre("Img/Barre.png")
 ball = Ball("Img/Ball.png")
-bricks = [Brick("Img/Barre.png")]
+bricks = Bricks([Brick(50, 50), Brick(250, 50), Brick(450, 50), Brick(650, 50),
+                Brick(50, 150), Brick(250, 150), Brick(450, 150), Brick(650, 150)])
 
 t=time.time()
 
@@ -34,18 +35,18 @@ while continuer:
             barre.movement("right")
         ball.movement(barre, bricks)
         t = time.time()
-        if len(bricks) != 0 :
-            if bricks[0].life == 0:
-                del(bricks[0])
         if ball.game_over == True:
+            print('game over')
+            continuer = False
+        if bricks.victory() == True:
+            print('victory')
             continuer = False
 
     fenetre.fill(0)
     fenetre.blit(barre.image,(barre.x ,barre.y))
     fenetre.blit(ball.image,(ball.x,ball.y))
-    if len(bricks) != 0 : fenetre.blit(bricks[0].image,(bricks[0].x, bricks[0].y))
+    for brick in bricks.bricks :
+        fenetre.blit(brick.image,(brick.x, brick.y))
     pygame.display.flip()
 
-if ball.game_over == True:
-    print('game over')
 pygame.quit()
