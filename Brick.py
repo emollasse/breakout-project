@@ -41,6 +41,5 @@ class Brick:
                         ball.vitessey *=-1
                 self.last_iteration = True
             self.life -=1
-            print(self.life)
         else:
             self.last_iteration = False
