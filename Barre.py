@@ -7,7 +7,7 @@ from math import sqrt
 class Barre:
     def __init__(self, image):
         self.image = pygame.image.load(image).convert()
-        self.x = 325
+        self.x = 625
         self.y = 550
         self.vitesse = 2
         self.sizew = 150
@@ -38,6 +38,7 @@ class Ball:
         self.vitessey = -self.norm_vitesse
         self.start_position = True
         self.last_iteration = False
+        self.collision = False
         self.game_over = False
 
     def movement(self, paddle, bricks):
@@ -57,6 +58,7 @@ class Ball:
                 if self.y < 0 : self.y = 0
                 elif self.y > 650: self.game_over = True
                 self.vitessey *=-1
+
 
     def go(self):
         if self.start_position == True:

@@ -28,7 +28,7 @@ def message(window, level, str_message, x=0):
 
 
 def game(fenetre):
-    level = Level(0)
+    level = Level(2)
 
     while not level.end_game:
         barre = Barre("Img/Barre.png")
@@ -70,6 +70,9 @@ def game(fenetre):
             fenetre.blit(ball.image,(ball.x,ball.y))
             level.draw_bricks(fenetre)
             pygame.display.flip()
+
+
+
 
 
 option = [["Play",(100,175)],["Play Endless Mode",(100,275)],["Score",(100,375)],["Quit",(100,475)]]
