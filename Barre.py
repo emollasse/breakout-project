@@ -7,7 +7,7 @@ from math import sqrt
 class Barre:
     def __init__(self, image):
         self.image = pygame.image.load(image).convert()
-        self.x = 625
+        self.x = 325
         self.y = 550
         self.vitesse = 2
         self.sizew = 150
@@ -40,6 +40,7 @@ class Ball:
         self.last_iteration = False
         self.collision = False
         self.game_over = False
+        self.rebound_number = [0,0]
 
     def movement(self, paddle, bricks):
         if self.start_position == True:
@@ -72,6 +73,7 @@ class Ball:
                 if self.last_iteration == False:
                     self.vitessey *=-1
                     self.rebound_paddle(paddle)
+                    self.rebound_number[0] +=1
                 self.last_iteration = True
                 if self.y + self.rayon < paddle.y :
                     self.y = paddle.y - 2*self.rayon
@@ -80,6 +82,7 @@ class Ball:
             elif (self.y + self.rayon > paddle.y and self.y + self.rayon < paddle.y + paddle.sizeh) and (self.x + self.rayon < paddle.x or self.x + self.rayon > paddle.x+paddle.sizew):
                 if self.last_iteration == False:
                     self.vitessex *=-1
+                    self.rebound_number[0] +=1
                 self.last_iteration = True
                 if self.x + self.rayon < paddle.x :
                     self.x = paddle.x - 2*self.rayon
@@ -90,13 +93,11 @@ class Ball:
                     self.rebound_paddle(paddle)
                     if (self.vitessey > 0 and self.y + self.rayon < paddle.y) or (self.vitessey < 0 and self.y + self.rayon > paddle.y+paddle.sizeh):
                         self.vitessey *=-1
+                    self.rebound_number[0] +=1
                 self.last_iteration = True
 
         else:
             self.last_iteration = False
-
-
-
 
     def rebound_paddle(self, paddle):
         self.vitessex = ((self.x + self.rayon - paddle.x-paddle.sizew/2)/(paddle.sizew/1.5))*self.norm_vitesse
@@ -104,6 +105,13 @@ class Ball:
             self.vitessey = -sqrt(abs(self.norm_vitesse**2 - self.vitessex**2))
         else :
             self.vitessey = sqrt(abs(self.norm_vitesse**2 - self.vitessex**2))
+
+
+    def max_rebound(self):
+        if self.rebound_number[1]//2 > 7:
+            return 3
+        else :
+            return 10-self.rebound_number[1]//2
 
 
 
