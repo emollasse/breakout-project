@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from Game import *
+from Scores import *
 
 pygame.init()
 
@@ -31,7 +32,7 @@ while not stop:
                     elif index_option == 1:
                         game_endless(fenetre)
                     elif index_option == 2:
-                        pass
+                        display_scores(fenetre)
                     elif index_option == 3:
                         stop = True
 

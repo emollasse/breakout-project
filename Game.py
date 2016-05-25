@@ -29,6 +29,8 @@ def game_level(fenetre):
         barre = Barre("Img/Barre.png")
         ball = Ball("Img/Ball.png")
 
+        level.reset()
+
         level.load()
 
         t=time.time()
@@ -68,12 +70,14 @@ def game_level(fenetre):
 
 def game_endless(fenetre):
     level = Level(0, "endless")
+    font = pygame.font.SysFont('freesans', 30)
 
     while not level.end_game:
         barre = Barre("Img/Barre.png")
         ball = Ball("Img/Ball.png")
 
-        level.bricks = []
+        level.reset()
+
         for i in range(3):
             level.add_row()
 
@@ -103,18 +107,24 @@ def game_endless(fenetre):
                 fenetre.fill(0)
                 if ball.game_over == True or level.brick_under_limit():
                     pygame.draw.rect(fenetre, (0,255,0),(0, 450, 800, 2))
+                    fenetre.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
                     fenetre.blit(barre.image,(barre.x ,barre.y))
                     fenetre.blit(ball.image,(ball.x,ball.y))
                     level.draw_bricks(fenetre)
+                    level.add_score()
                     message(fenetre, level, "Game Over")
                     level.end = True
                 if ball.rebound_number[0] == ball.max_rebound():
                     ball.rebound_number = [0, ball.rebound_number[1]+1]
                     level.add_row()
-                if level.victory():
-                    level.add_row()
+                if ball.under_limit():
+                    if level.victory():
+                        level.change_score(6, ball)
+                        ball.rebound_number = [0, ball.rebound_number[1]]
+                        level.add_row()
 
             fenetre.fill(0)
+            fenetre.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
             pygame.draw.rect(fenetre, (0,255,0),(0, 450, 800, 2))
             fenetre.blit(barre.image,(barre.x ,barre.y))
             fenetre.blit(ball.image,(ball.x,ball.y))

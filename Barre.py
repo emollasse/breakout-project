@@ -113,6 +113,11 @@ class Ball:
         else :
             return 10-self.rebound_number[1]//2
 
+    def under_limit(self):
+        if self.y + self.rayon*2 > 450:
+            return True
+        return False
+
 
 
 

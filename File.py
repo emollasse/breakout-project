@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import sqlite3
 from Barre import *
 from Brick import Brick
 from random import randint
@@ -11,6 +12,7 @@ class Level:
         self.color = [(232,232,0),(255,127,0),(255,0,0)]
         self.end = False
         self.end_game = False
+        self.score = 0
 
         if mode == "level":
             list_levels = open('Level\listLevels.txt','r')
@@ -21,9 +23,12 @@ class Level:
             self.list_rows = list_rows.read().split('\n')
             list_rows.close()
 
-    def load(self):
-        self.end = False
+    def reset(self):
         self.bricks = []
+        self.end = False
+        self.score = 0
+
+    def load(self):
         if len(self.list_levels) > self.nb:
             name_level = self.list_levels[self.nb]
             with open(str(name_level), 'r') as level:
@@ -40,7 +45,7 @@ class Level:
     def manage_bricks(self, ball):
         l = []
         for i in range(len(self.bricks)) :
-            self.bricks[i].collision(ball)
+            self.bricks[i].collision(ball, self)
             if self.bricks[i].life == 0:
                 l += [i]
         for i in l : del(self.bricks[i])
@@ -69,8 +74,11 @@ class Level:
                 brick = line.split(';')
                 self.bricks.append(Brick(int(brick[0]),int(brick[1]),int(brick[2]),int(brick[3]),int(brick[4])))
 
+    def add_score(self):
+        conn = sqlite3.connect("Save_scores/scores_register.sq3")
+        cur = conn.cursor()
+        cur.execute("INSERT INTO scores(score) VALUES(%d)" %self.score)
+        conn.commit()
 
-
-
-
-
+    def change_score(self, life, ball):
+        self.score += life * (ball.rebound_number[1]+1)

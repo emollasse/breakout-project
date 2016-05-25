@@ -14,11 +14,12 @@ class Brick:
     def __del__(self):
         pass
 
-    def collision(self, ball):
+    def collision(self, ball, level):
         if (ball.y + 2*ball.rayon > self.y and ball.y < self.y + self.sizeh) and (ball.x + 2*ball.rayon > self.x and ball.x < self.x + self.sizew):
             if (ball.x + ball.rayon > self.x and ball.x + ball.rayon < self.x + self.sizew) and (ball.y + ball.rayon < self.y or ball.y + ball.rayon > self.y+self.sizeh):
                 if ball.last_iteration == False:
                     ball.vitessey *=-1
+                    level.change_score(self.life, ball)
                     self.life -=1
                 ball.last_iteration = True
                 if ball.y + ball.rayon < self.y :
@@ -28,6 +29,7 @@ class Brick:
             elif (ball.y + ball.rayon > self.y and ball.y + ball.rayon < self.y + self.sizeh) and (ball.x + ball.rayon < self.x or ball.x + ball.rayon > self.x+self.sizew):
                 if ball.last_iteration == False:
                     ball.vitessex *=-1
+                    level.change_score(self.life, ball)
                     self.life -=1
                 ball.last_iteration = True
                 if ball.x + ball.rayon < self.x :
@@ -36,6 +38,7 @@ class Brick:
                     ball.x = self.x + self.sizew
             else :
                 if ball.last_iteration == False:
+                    level.change_score(self.life, ball)
                     self.life -=1
                     if (ball.vitessex > 0 and ball.x + ball.rayon < self.x) or (ball.vitessex < 0 and ball.x + ball.rayon > self.x+self.sizeh):
                         ball.vitessex *=-1
