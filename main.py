@@ -49,4 +49,3 @@ while not stop:
     pygame.display.flip()
 
 pygame.quit()
-

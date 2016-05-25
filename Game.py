@@ -5,11 +5,11 @@ from Brick import *
 from File import *
 import time
 
-def message(window, level, str_message, x=0):
+def message(window, level, str_message, x=0, y=0):
     font = pygame.font.SysFont('freesans', 36)
     message_ok = False
     text = font.render(str_message,True, (255,0,0))
-    window.blit(text, (300 + x, 300))
+    window.blit(text, (300 + x, 300 + y))
     pygame.display.flip()
     while not message_ok and not level.end_game:
         for event in pygame.event.get():
@@ -112,7 +112,7 @@ def game_endless(fenetre):
                     fenetre.blit(ball.image,(ball.x,ball.y))
                     level.draw_bricks(fenetre)
                     level.add_score()
-                    message(fenetre, level, "Game Over")
+                    message(fenetre, level, "Game Over", y=170)
                     level.end = True
                 if ball.rebound_number[0] == ball.max_rebound():
                     ball.rebound_number = [0, ball.rebound_number[1]+1]
