@@ -16,7 +16,7 @@ def display_scores(screen):
     conn = sqlite3.connect("Save_scores/scores_register.sq3")
     cur = conn.cursor()
     cur.execute("SELECT * FROM scores")
-    ten_score = sort_list(list(cur)[0:10])
+    ten_score = sort_list(list(cur))[0:10]
 
     see_score = True
 
@@ -32,7 +32,7 @@ def display_scores(screen):
                         conn = sqlite3.connect("Save_scores/scores_register.sq3")
                         cur = conn.cursor()
                         cur.execute("SELECT * FROM scores")
-                        ten_score = sort_list(list(cur)[0:10])
+                        ten_score = sort_list(list(cur))[0:10]
 
         background = pygame.Surface(screen.get_size())
         background.fill((0, 0, 0))
