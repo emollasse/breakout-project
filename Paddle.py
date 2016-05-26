@@ -33,7 +33,7 @@ class Ball:
         self.radius = 12.5
         self.x = 400-self.radius
         self.y = 550-2*self.radius
-        self.norm_speed = 2
+        self.norm_speed = 1.5
         self.speedx = 0
         self.speedy = -self.norm_speed
         self.start_position = True

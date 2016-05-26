@@ -105,6 +105,7 @@ def game_endless(window):
                 ball.movement(barre, level)
                 t = time.time()
                 window.fill(0)
+                print(ball.rebound_number)
                 if ball.game_over == True or level.brick_under_limit():
                     pygame.draw.rect(window, (0,255,0),(0, 450, 800, 2))
                     window.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
@@ -116,11 +117,14 @@ def game_endless(window):
                     level.end = True
                 if ball.rebound_number == ball.max_rebound():
                     ball.rebound_number = 0
+                    print(ball.max_rebound())
                     ball.level_number += 1
+                    print(ball.level_number)
                     level.add_row()
                 if ball.under_limit():
                     if level.victory():
                         level.change_score(6, ball)
+                        ball.rebound_number = 0
                         level.add_row()
 
             window.fill(0)

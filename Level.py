@@ -82,4 +82,4 @@ class Level:
 
     def change_score(self, life, ball):
         self.score += life * (ball.level_number+1)
-        ball.rebound_number = 0
+
