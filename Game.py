@@ -112,7 +112,6 @@ def game_endless(window):
                 ball.movement(barre, level)
                 t = time.time()
                 window.fill(0)
-                print(ball.rebound_number)
                 if ball.game_over == True or level.brick_under_limit():
                     #Game over condition
                     pygame.draw.rect(window, (0,255,0),(0, 450, 800, 2))
@@ -126,9 +125,7 @@ def game_endless(window):
                 #add a row when the rebound number reach a certain value.
                 if ball.rebound_number == ball.max_rebound():
                     ball.rebound_number = 0
-                    print(ball.max_rebound())
                     ball.level_number += 1
-                    print(ball.level_number)
                     level.add_row()
                 #check if the ball is under the limit and if the level is empty and add a row when it's True.
                 if ball.under_limit():
