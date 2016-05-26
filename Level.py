@@ -6,6 +6,7 @@ from Brick import Brick
 from random import randint
 
 class Level:
+#Class that handles bricks, the different levels, the victory condition, score changing, score adding and row adding.
     def __init__(self, nb, mode):
         self.nb = nb
         self.bricks = []
@@ -29,6 +30,7 @@ class Level:
         self.score = 0
 
     def load(self):
+    #function that read each line of the file which correspond to each brick and add an object brick.
         if len(self.list_levels) > self.nb:
             name_level = self.list_levels[self.nb]
             with open(str(name_level), 'r') as level:
@@ -39,10 +41,12 @@ class Level:
             self.end_game = True
 
     def draw_bricks(self, window):
+    #function that draw bricks.
         for brick in self.bricks :
             pygame.draw.rect(window, self.color[brick.life-1],(brick.x, brick.y, brick.sizew, brick.sizeh))
 
     def manage_bricks(self, ball):
+    #function which checks collisions of each brick with the ball and deletes the brick of the list bricks when the brick has 0 life.
         l = []
         for i in range(len(self.bricks)) :
             self.bricks[i].collision(ball, self)
@@ -51,20 +55,24 @@ class Level:
         for i in l : del(self.bricks[i])
 
     def next_level(self):
+    #function which increase the level number.
         self.nb += 1
 
     def victory(self):
+    #function wich checks if there are some bricks left in the level.
         if self.bricks == []:
             return True
         return False
 
     def brick_under_limit(self):
+    #fucntion which checks if there is one brick under the line limit during the endless mode.
         for brick in self.bricks:
             if brick.y + brick.sizeh > 450:
                 return True
         return False
 
     def add_row(self):
+    #function wich add a row randomly among the different files of endless mode.
         for brick in self.bricks:
             brick.y += 50
 
@@ -75,11 +83,13 @@ class Level:
                 self.bricks.append(Brick(int(brick[0]),int(brick[1]),int(brick[2]),int(brick[3]),int(brick[4])))
 
     def add_score(self):
+    #function which add score to the database.
         conn = sqlite3.connect("Save_scores/scores_register.sq3")
         cur = conn.cursor()
         cur.execute("INSERT INTO scores(score) VALUES(%d)" %self.score)
         conn.commit()
 
     def change_score(self, life, ball):
+    #function which updates the scores.
         self.score += life * (ball.level_number+1)
 

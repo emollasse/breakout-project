@@ -2,17 +2,19 @@ import pygame
 from pygame.locals import *
 from Game import *
 from Scores import *
-
+#Initialisation of pygame
 pygame.init()
 
 window = pygame.display.set_mode((800, 650))
 font = pygame.font.SysFont('freesans', 36)
 font_title = pygame.font.SysFont('freesans', 50)
 
+#Menu
 option = (("Play",(100,175)),("Play Endless Mode",(100,275)),("Score",(100,375)),("Quit",(100,475)))
 index_option = 0
 stop = False
 
+#Loop which checks events for the menu.
 while not stop:
     for event in pygame.event.get():
             if event.type == QUIT:
@@ -35,7 +37,7 @@ while not stop:
                         display_scores(window)
                     elif index_option == 3:
                         stop = True
-
+    #Draw the menu
     window.fill(0)
 
     text = font_title.render("Break Out", True, (255,255,255))

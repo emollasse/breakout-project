@@ -2,10 +2,13 @@
 from pygame.locals import *
 import sqlite3
 
+
 def sort_list(list_score):
+#Sorting function that takes a list as argument and returns the list which has been sorted descending.
     return(sorted(list_score, reverse =True))
 
 def clear_scores():
+#Function that erases all the scores of the database.
     fichierDonnees ="Save_scores/scores_register.sq3"
     conn =sqlite3.connect(fichierDonnees)
     cur =conn.cursor()
@@ -13,13 +16,14 @@ def clear_scores():
     conn.commit()
 
 def display_scores(screen):
+#Function that displays scores.
     conn = sqlite3.connect("Save_scores/scores_register.sq3")
     cur = conn.cursor()
     cur.execute("SELECT * FROM scores")
     ten_score = sort_list(list(cur))[0:10]
 
     see_score = True
-
+    #Loop that manages the events which allows the user to quit or to call the function which allows to reset the database.
     while see_score:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -33,7 +37,7 @@ def display_scores(screen):
                         cur = conn.cursor()
                         cur.execute("SELECT * FROM scores")
                         ten_score = sort_list(list(cur))[0:10]
-
+        #Printing scores on the screen.
         background = pygame.Surface(screen.get_size())
         background.fill((0, 0, 0))
         font = pygame.font.Font(None,45)
