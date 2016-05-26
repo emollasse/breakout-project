@@ -1,10 +1,9 @@
 ﻿import pygame
 from pygame.locals import *
-from Barre import *
+from Paddle import *
 
 class Brick:
     def __init__(self, x, y, life, sizew, sizeh):
-        self.image = pygame.image.load("Img/Barre.png").convert()
         self.x = x
         self.y = y
         self.sizew = sizew
@@ -15,35 +14,35 @@ class Brick:
         pass
 
     def collision(self, ball, level):
-        if (ball.y + 2*ball.rayon > self.y and ball.y < self.y + self.sizeh) and (ball.x + 2*ball.rayon > self.x and ball.x < self.x + self.sizew):
-            if (ball.x + ball.rayon > self.x and ball.x + ball.rayon < self.x + self.sizew) and (ball.y + ball.rayon < self.y or ball.y + ball.rayon > self.y+self.sizeh):
+        if (ball.y + 2*ball.radius > self.y and ball.y < self.y + self.sizeh) and (ball.x + 2*ball.radius > self.x and ball.x < self.x + self.sizew):
+            if (ball.x + ball.radius > self.x and ball.x + ball.radius < self.x + self.sizew) and (ball.y + ball.radius < self.y or ball.y + ball.radius > self.y+self.sizeh):
                 if ball.last_iteration == False:
-                    ball.vitessey *=-1
+                    ball.speedy *=-1
                     level.change_score(self.life, ball)
                     self.life -=1
                 ball.last_iteration = True
-                if ball.y + ball.rayon < self.y :
-                    ball.y = self.y - 2*ball.rayon
+                if ball.y + ball.radius < self.y :
+                    ball.y = self.y - 2*ball.radius
                 else :
                     ball.y = self.y + self.sizeh
-            elif (ball.y + ball.rayon > self.y and ball.y + ball.rayon < self.y + self.sizeh) and (ball.x + ball.rayon < self.x or ball.x + ball.rayon > self.x+self.sizew):
+            elif (ball.y + ball.radius > self.y and ball.y + ball.radius < self.y + self.sizeh) and (ball.x + ball.radius < self.x or ball.x + ball.radius > self.x+self.sizew):
                 if ball.last_iteration == False:
-                    ball.vitessex *=-1
+                    ball.speedx *=-1
                     level.change_score(self.life, ball)
                     self.life -=1
                 ball.last_iteration = True
-                if ball.x + ball.rayon < self.x :
-                    ball.x = self.x - 2*ball.rayon
+                if ball.x + ball.radius < self.x :
+                    ball.x = self.x - 2*ball.radius
                 else :
                     ball.x = self.x + self.sizew
             else :
                 if ball.last_iteration == False:
                     level.change_score(self.life, ball)
                     self.life -=1
-                    if (ball.vitessex > 0 and ball.x + ball.rayon < self.x) or (ball.vitessex < 0 and ball.x + ball.rayon > self.x+self.sizeh):
-                        ball.vitessex *=-1
-                    if (ball.vitessey > 0 and ball.y + ball.rayon < self.y) or (ball.vitessey < 0 and ball.y + ball.rayon > self.y+self.sizeh):
-                        ball.vitessey *=-1
+                    if (ball.speedx > 0 and ball.x + ball.radius < self.x) or (ball.speedx < 0 and ball.x + ball.radius > self.x+self.sizeh):
+                        ball.speedx *=-1
+                    if (ball.speedy > 0 and ball.y + ball.radius < self.y) or (ball.speedy < 0 and ball.y + ball.radius > self.y+self.sizeh):
+                        ball.speedy *=-1
                 ball.last_iteration = True
         else:
             self.last_iteration = False

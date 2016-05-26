@@ -5,11 +5,11 @@ from Scores import *
 
 pygame.init()
 
-fenetre = pygame.display.set_mode((800, 650))
+window = pygame.display.set_mode((800, 650))
 font = pygame.font.SysFont('freesans', 36)
 font_title = pygame.font.SysFont('freesans', 50)
 
-option = [["Play",(100,175)],["Play Endless Mode",(100,275)],["Score",(100,375)],["Quit",(100,475)]]
+option = (("Play",(100,175)),("Play Endless Mode",(100,275)),("Score",(100,375)),("Quit",(100,475)))
 index_option = 0
 stop = False
 
@@ -28,24 +28,24 @@ while not stop:
                     if index_option == -1 : index_option = 3
                 elif event.key == K_RETURN:
                     if index_option == 0:
-                        game_level(fenetre)
+                        game_level(window)
                     elif index_option == 1:
-                        game_endless(fenetre)
+                        game_endless(window)
                     elif index_option == 2:
-                        display_scores(fenetre)
+                        display_scores(window)
                     elif index_option == 3:
                         stop = True
 
-    fenetre.fill(0)
+    window.fill(0)
 
     text = font_title.render("Break Out", True, (255,255,255))
-    fenetre.blit(text, (300, 50))
+    window.blit(text, (300, 50))
     for i in range(len(option)):
         if i == index_option :
             text = font.render(option[i][0],True, (255,0,0))
         else :
             text = font.render(option[i][0],True, (255,255,255))
-        fenetre.blit(text, option[i][1])
+        window.blit(text, option[i][1])
     pygame.display.flip()
 
 pygame.quit()

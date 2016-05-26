@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 import sqlite3
-from Barre import *
+from Paddle import *
 from Brick import Brick
 from random import randint
 
@@ -9,7 +9,7 @@ class Level:
     def __init__(self, nb, mode):
         self.nb = nb
         self.bricks = []
-        self.color = [(232,232,0),(255,127,0),(255,0,0)]
+        self.color = ((232,232,0),(255,127,0),(255,0,0))
         self.end = False
         self.end_game = False
         self.score = 0
@@ -81,4 +81,5 @@ class Level:
         conn.commit()
 
     def change_score(self, life, ball):
-        self.score += life * (ball.rebound_number[1]+1)
+        self.score += life * (ball.level_number+1)
+        ball.rebound_number = 0

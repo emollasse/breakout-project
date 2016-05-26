@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
-from Barre import *
+from Paddle import *
 from Brick import *
-from File import *
+from Level import *
 import time
 
 def message(window, level, str_message, x=0, y=0):
@@ -22,11 +22,11 @@ def message(window, level, str_message, x=0, y=0):
                         message_ok = True
 
 
-def game_level(fenetre):
+def game_level(window):
     level = Level(0, "level")
 
     while not level.end_game:
-        barre = Barre("Img/Barre.png")
+        barre = Paddle("Img/Paddle.png")
         ball = Ball("Img/Ball.png")
 
         level.reset()
@@ -54,26 +54,26 @@ def game_level(fenetre):
                 ball.movement(barre, level)
                 t = time.time()
                 if ball.game_over == True:
-                    message(fenetre, level, "Game Over")
+                    message(window, level, "Game Over")
                     level.end = True
                 if level.victory() == True:
-                    message(fenetre, level, "Victory", 50)
+                    message(window, level, "Victory", 50)
                     level.end = True
                     level.next_level()
 
 
-            fenetre.fill(0)
-            fenetre.blit(barre.image,(barre.x ,barre.y))
-            fenetre.blit(ball.image,(ball.x,ball.y))
-            level.draw_bricks(fenetre)
+            window.fill(0)
+            window.blit(barre.image,(barre.x ,barre.y))
+            window.blit(ball.image,(ball.x,ball.y))
+            level.draw_bricks(window)
             pygame.display.flip()
 
-def game_endless(fenetre):
+def game_endless(window):
     level = Level(0, "endless")
     font = pygame.font.SysFont('freesans', 30)
 
     while not level.end_game:
-        barre = Barre("Img/Barre.png")
+        barre = Paddle("Img/Paddle.png")
         ball = Ball("Img/Ball.png")
 
         level.reset()
@@ -104,29 +104,29 @@ def game_endless(fenetre):
                     barre.movement("right")
                 ball.movement(barre, level)
                 t = time.time()
-                fenetre.fill(0)
+                window.fill(0)
                 if ball.game_over == True or level.brick_under_limit():
-                    pygame.draw.rect(fenetre, (0,255,0),(0, 450, 800, 2))
-                    fenetre.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
-                    fenetre.blit(barre.image,(barre.x ,barre.y))
-                    fenetre.blit(ball.image,(ball.x,ball.y))
-                    level.draw_bricks(fenetre)
+                    pygame.draw.rect(window, (0,255,0),(0, 450, 800, 2))
+                    window.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
+                    window.blit(barre.image,(barre.x ,barre.y))
+                    window.blit(ball.image,(ball.x,ball.y))
+                    level.draw_bricks(window)
                     level.add_score()
-                    message(fenetre, level, "Game Over", y=170)
+                    message(window, level, "Game Over", y=170)
                     level.end = True
-                if ball.rebound_number[0] == ball.max_rebound():
-                    ball.rebound_number = [0, ball.rebound_number[1]+1]
+                if ball.rebound_number == ball.max_rebound():
+                    ball.rebound_number = 0
+                    ball.level_number += 1
                     level.add_row()
                 if ball.under_limit():
                     if level.victory():
                         level.change_score(6, ball)
-                        ball.rebound_number = [0, ball.rebound_number[1]]
                         level.add_row()
 
-            fenetre.fill(0)
-            fenetre.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
-            pygame.draw.rect(fenetre, (0,255,0),(0, 450, 800, 2))
-            fenetre.blit(barre.image,(barre.x ,barre.y))
-            fenetre.blit(ball.image,(ball.x,ball.y))
-            level.draw_bricks(fenetre)
+            window.fill(0)
+            window.blit(font.render("Scores : "+str(level.score),True, (255,0,0)), (325, 600))
+            pygame.draw.rect(window, (0,255,0),(0, 450, 800, 2))
+            window.blit(barre.image,(barre.x ,barre.y))
+            window.blit(ball.image,(ball.x,ball.y))
+            level.draw_bricks(window)
             pygame.display.flip()
